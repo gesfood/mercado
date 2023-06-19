@@ -10,6 +10,9 @@ export const mercadoSchema = {
     name: {
       type: "string",
     },
+    codigo: {
+      type: "string",
+    },
     quantity: {
       type: "string",
     },

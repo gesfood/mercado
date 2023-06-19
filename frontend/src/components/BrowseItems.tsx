@@ -6,6 +6,7 @@ export default (props) => {
         <tbody>
           {props.items.map((it, index) => (
             <tr key={index}>
+              <td>{it.codigo}</td>
               <td>{it.name}</td>
               <td>{it.quantity}</td>
               <td>{it.price}</td>

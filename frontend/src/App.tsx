@@ -4,8 +4,13 @@ import * as Database from "./database/RxDatabase";
 import BrowseItems from "./components/BrowseItems";
 import CreateItem from "./components/CreateItem";
 import { nanoid } from "nanoid";
+import { createBrowserRouter, RouterProvider } from "react-router-dom";
+import { ConsultaItens } from "./components/ConsultaItens";
+import { Home } from "./components/Home";
+import { Teste } from "./components/Teste";
 
-interface Item {
+export interface Item {
+  codigo: string;
   name: string;
   quantity: number;
   price: number;
@@ -41,28 +46,23 @@ function App() {
   }, []);
 
   return (
-    <div className="main-container">
-      <h1>Mercado App</h1>
-      <div className="browse-items-container">
-        <BrowseItems items={items} />
-      </div>
-      <CreateItem
-        mercadoDb={mercadoDb}
-        createItem={async (mercadoDb, item: Item) => {
-          const thisMoment = new Date().toISOString()
-          const newItem = await mercadoDb.items.insert({
-            id: nanoid(16),
-            name: item.name,
-            quantity: item.quantity,
-            price: item.price,
-            _deleted: false,
-            createdAt: thisMoment,
-            updatedAt: thisMoment,
-          });
-          console.log(`Created a new item! ${JSON.stringify(newItem)}`)
-        }}
-      />
-    </div>
+    <RouterProvider
+      router={
+        createBrowserRouter([
+        {
+          path: "/",
+          element: <Home mercadoDb={mercadoDb} hello={'World'} />
+        },
+        {
+          path: "/consulta",
+          element: <ConsultaItens mercadoDb={mercadoDb} items={items} />
+        },
+        {
+          path: "/teste-api",
+          element: <Teste />
+        },
+      ])}
+    />
   );
 }
 
